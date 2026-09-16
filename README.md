@@ -65,7 +65,7 @@ cf28f08062c13c131b272626d16a34e0557cf9669a95cbe40d1a5da5238d5b4b-999
 
 ## ✅ Tested / Compatibility
 
-| Category | Details |
+| Category | Details | 
 |---|---|
 | **Headsets** | Logitech G430, G431, G432, G433, G533, G633, G635, G733, G933, G935, PRO X, PRO X WIRELESS |
 | **OS** | Windows 10 / Windows 11 |
