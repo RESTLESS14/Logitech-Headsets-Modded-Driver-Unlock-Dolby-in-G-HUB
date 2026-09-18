@@ -10,7 +10,7 @@ This modification is designed to unlock Dolby functionality in G HUB for support
 The driver itself is based on the original Logitech driver, with the necessary modifications applied to enable the Dolby functionality
 </p>
 
-💬 [Original TechPowerUp Thread](https://www.techpowerup.com/forums/threads/logitech-headsets-modded-driver-%E2%80%94-unlock-dolby-in-g-hub.352645/#post-5792902)
+💬 [Original TechPowerUp Thread](https://www.techpowerup.com/forums/threads/logitech-headsets-modded-driver-%E2%80%94-unlock-dolby-in-g-hub.352645/)
 ---
 
 ## ✨ Features
