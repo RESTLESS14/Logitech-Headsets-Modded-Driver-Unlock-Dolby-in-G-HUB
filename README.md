@@ -60,6 +60,25 @@ cf28f08062c13c131b272626d16a34e0557cf9669a95cbe40d1a5da5238d5b4b-999
 ```
 %localappdata%\LGHUB\settings.db
 ```
+---
+
+## ⚠️ Important — Disable G HUB Automatic Updates
+
+To prevent G HUB from automatically updating and potentially breaking the modification, **disable Automatic Updates after completing the installation.**
+**G HUB updates can refresh its cache and replace the Dolby Unlock files.**
+
+
+Go to:
+
+**G HUB → Settings ⚙️ → Updates → Disable "Enable Automatic Updates"**
+
+> ⚠️ **Keep Automatic Updates disabled while using this modification.**
+
+<p align="center">
+  <img src="img/disable-automatic-updates.png" alt="Disable G HUB Automatic Updates" width="800">
+</p>
+
+---
 
 ---
 
