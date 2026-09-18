@@ -10,6 +10,7 @@ This modification is designed to unlock Dolby functionality in G HUB for support
 The driver itself is based on the original Logitech driver, with the necessary modifications applied to enable the Dolby functionality
 </p>
 
+💬 [Original TechPowerUp Thread](https://www.techpowerup.com/forums/threads/logitech-headsets-modded-driver-%E2%80%94-unlock-dolby-in-g-hub.352645/#post-5792902)
 ---
 
 ## ✨ Features
@@ -47,7 +48,7 @@ C:\ProgramData\LGHUB\depots\824196\core\data\devices
 ```
 > Note: The `824196` folder number may be different depending on your installed G HUB version. Use the corresponding folder for your current G HUB version.
 
-**4. 🔄 Rename the following cache file to any name of your choice:**
+**4. 🔄 Rename the largest cache file by size to any name of your choice:**
 ```
 C:\ProgramData\LGHUB\cache\cf28f08062c13c131b272626d16a34e0557cf9669a95cbe40d1a5da5238d5b4b
 ```
@@ -80,11 +81,35 @@ Go to:
   <img src="img/disable-automatic-updates.png" alt="Disable G HUB Automatic Updates" width="800">
 </p>
 
-## 💾 Back Up G HUB Settings & Profiles
+## 💾 Back Up G HUB Profiles
 
-**Back up your G HUB settings and profiles to your Logitech account before making any changes.**
+> **Back up your G HUB profiles before making any changes.**
 
-> **Deleting `settings.db` will remove your saved G HUB settings and profiles.**
+Go to **G HUB → Manage Profiles**, select the profile you want to back up, click the **three dots**, then choose:
+
+- **Share** — saves the profile to your Logitech account.
+- **Backup** — saves the profile locally.
+
+> ⚠️ **Do this before deleting `settings.db`**, as your saved G HUB settings and profiles may be removed.
+
+### 🔄 Restoring Profiles
+
+After resetting G HUB, you may need to **add or scan for your games again**.
+
+In some cases, restored profiles may appear under **Desktop** instead of being assigned to their original games.
+
+To fix this:
+
+1. Add or scan for your games again in G HUB.
+2. Click the **three dots** on the profile and select **Copy**.
+3. Select the correct game from the list and copy the profile to it.
+4. Once the profile is assigned to the correct game, **profile switching should work normally again**.
+
+> 💡 Backing up and organizing your profiles before deleting `settings.db` can save you from having to redo these steps afterward.
+
+Thanks to [Tunnah](https://www.techpowerup.com/forums/members/tunnah.100852/) on TechPowerUp for the helpful feedback.
+
+[Original post](https://www.techpowerup.com/forums/threads/logitech-headsets-modded-driver-%E2%80%94-unlock-dolby-in-g-hub.352645/post-5793076)
 
 ---
 
