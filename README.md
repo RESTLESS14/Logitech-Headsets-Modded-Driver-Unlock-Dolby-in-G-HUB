@@ -1,133 +1,95 @@
 <p align="center">
-  <h1 align="center">🎧 Logitech Headsets Modded Driver — Unlock Dolby in G HUB</h1>
+  <h1 align="center">🎧 Logitech G HUB Dolby Unlock</h1>
+  <strong>🔊 Dolby device definitions for supported Logitech headsets</strong><br>
+  <sub>Modified Logitech headset driver · G HUB integration</sub>
 </p>
 
 <p align="center">
-This modification is designed to unlock Dolby functionality in G HUB for supported Logitech headsets
+  <a href="https://github.com/RESTLESS14/Logitech-Headsets-Modded-Driver-Unlock-Dolby-in-G-HUB/releases/tag/v1.1.0">🚀 Latest update · v1.1.0</a>
+  &nbsp;•&nbsp;
+  <a href="https://www.techpowerup.com/forums/threads/logitech-headsets-modded-driver-%E2%80%94-unlock-dolby-in-g-hub.352645/">💬 TechPowerUp thread</a>
 </p>
 
-<p align="center">
-The driver itself is based on the original Logitech driver, with the necessary modifications applied to enable the Dolby functionality
-</p>
+## 🗂️ Contents
 
-💬 [Original TechPowerUp Thread](https://www.techpowerup.com/forums/threads/logitech-headsets-modded-driver-%E2%80%94-unlock-dolby-in-g-hub.352645/)
----
+- [✨ Features](#features)
+- [🧭 Setup options](#setup-options)
+- [🛠️ Full setup stages](#full-setup-stages)
+- [🧩 Cache patching](#cache-patching)
+- [🔄 G HUB updates](#g-hub-updates)
+- [✅ Compatibility](#compatibility)
 
 ## ✨ Features
 
-- Dolby unlocked in G HUB along with DTS
-- Based on the original Logitech headset driver
-- Updated Blue VO!CE version for devices that already support it (Logitech Blue VO!CE 2.0 Effect)
+| Feature | Description |
+|---|---|
+| 🔊 Dolby device definitions | Adds Dolby controls in G HUB for supported Logitech headsets. |
+| 🧩 Active cache patch | Updates the active G HUB cache so it loads the modified device definitions. |
+| 🎙️ Blue VO!CE 2.0 Effect | Includes files for devices that support this feature. |
+| 🛠️ Setup modes | Provides Full setup and Dolby unlock only options. |
 
 <p align="center">
   <table>
     <tr>
       <td align="center" width="400">
-        <img src="img/DOLBY.png" alt="Dolby unlocked in G HUB" width="380"><br>
-        <sub>🔊 Dolby</sub>
+        <img src="img/DOLBY.png" alt="Dolby in G HUB" width="380"><br>
+        <sub>Dolby device controls in G HUB</sub>
       </td>
       <td align="center" width="400">
-        <img src="img/Blue%20VO!CE%202.0%20Effect.png" alt="Logitech Blue VO!CE 2.0 Effect" width="380"><br>
-        <sub>🎙️ Blue VO!CE 2.0 Effect</sub>
+        <img src="img/Blue%20VO!CE%202.0%20Effect.png" alt="Blue VO!CE 2.0 Effect" width="380"><br>
+        <sub>Blue VO!CE 2.0 Effect</sub>
       </td>
     </tr>
   </table>
 </p>
 
----
+## 🧭 Setup options
 
-## 🛠️ installation
+| Menu option | Driver cleanup and install | Dolby depot files | Active cache patch | Reset `settings.db` |
+|---|:---:|:---:|:---:|:---:|
+| **[1] Full setup** | Yes | Yes | Yes | Yes, after backup |
+| **[2] Dolby unlock only** | No | Yes | Yes | No |
 
-**1. 📜 Install the certificate.**
+## 🛠️ Full setup stages
 
-**2. 💿 Install the modified driver through Device Manager.**
+| Stage | Operation | Result |
+|---|---|---|
+| **1 · 🔇 Audio and G HUB** | Stops Windows Audio and G HUB. | Audio services and G HUB are paused for setup. |
+| **2 · 🧹 Driver cleanup** | Removes selected old Logitech audio-driver packages and ghost devices. | Prepares Windows for the supplied driver. |
+| **3 · 💿 Driver installation** | Stages the supplied driver and applies it to supported connected hardware with DevCon. | The selected Logitech audio driver is installed. |
+| **4 · 🎧 Dolby files** | Backs up and updates the device definitions in the installed G HUB depot. | G HUB receives the modified Dolby definitions. |
+| **5 · 🧩 Cache patch** | Backs up and patches the active G HUB cache package. | G HUB can load the updated device definitions. |
+| **6 · ⚙️ Settings reset** | Backs up `%LocalAppData%\LGHUB\settings.db`, then removes it. | G HUB rebuilds its local settings. |
+| **7 · 🔊 Restart** | Starts Windows Audio and G HUB again. | Audio and G HUB services resume. |
 
-**3. 📁 Place the Dolby Unlock files in the following directory:**
-```
-C:\ProgramData\LGHUB\depots\824196\core\data\devices
-```
-> Note: The `824196` folder number may be different depending on your installed G HUB version. Use the corresponding folder for your current G HUB version.
+**Dolby unlock only** applies the Dolby depot files and cache patch. It skips driver cleanup and installation, and leaves `settings.db` unchanged.
 
-**4. 🔄 Rename the largest cache file by size to any name of your choice:**
-```
-C:\ProgramData\LGHUB\cache\cf28f08062c13c131b272626d16a34e0557cf9669a95cbe40d1a5da5238d5b4b
-```
-Example:
-```
-cf28f08062c13c131b272626d16a34e0557cf9669a95cbe40d1a5da5238d5b4b-999
-```
+## 🧩 Cache patching
 
-**5. ⚙️ Stop all G HUB services through Task Manager, then delete the following file:**
-```
-%localappdata%\LGHUB\settings.db
-```
----
+`Patch-GHubCache.ps1` locates the active G HUB cache file in `C:\ProgramData\LGHUB\cache`. It patches only these two device-definition entries inside that cache file:
 
-## ⚠️ Important  
+- `devices_0001.json`
+- `devices_0002.json`
 
-##  Disable G HUB Automatic Updatess
+The patcher backs up the cache file, writes the Dolby-modified definitions, verifies the result, and keeps the cache filename unchanged. If the definitions are already present, it leaves the cache as it is.
 
-To prevent G HUB from automatically updating and potentially breaking the modification, **disable Automatic Updates after completing the installation.**
-**G HUB updates can refresh its cache and replace the Dolby Unlock files.**
+## 🔄 G HUB updates
 
-
-Go to:
-
-**G HUB → Settings ⚙️ → Updates → Disable "Enable Automatic Updates"**
-
-> ⚠️ **Keep Automatic Updates disabled while using this modification.**
+Keep automatic updates turned off while using the modification. G HUB updates may replace the modified depot files or cache package.
 
 <p align="center">
-  <img src="img/disable-automatic-updates.png" alt="Disable G HUB Automatic Updates" width="800">
+  <img src="img/disable-automatic-updates.png" alt="Disable G HUB automatic updates" width="800"><br>
+  <sub>G HUB Settings → Updates → Enable Automatic Updates</sub>
 </p>
 
-## 💾 Back Up G HUB Profiles
+## ✅ Compatibility
 
-> **Back up your G HUB profiles before making any changes.**
-
-Go to **G HUB → Manage Profiles**, select the profile you want to back up, click the **three dots**, then choose:
-
-- **Share** — saves the profile to your Logitech account.
-- **Backup** — saves the profile locally.
-
-> ⚠️ **Do this before deleting `settings.db`**, as your saved G HUB settings and profiles may be removed.
-
-### 🔄 Restoring Profiles
-
-After resetting G HUB, you may need to **add or scan for your games again**.
-
-In some cases, restored profiles may appear under **Desktop** instead of being assigned to their original games.
-
-To fix this:
-
-1. Add or scan for your games again in G HUB.
-2. Click the **three dots** on the profile and select **Copy**.
-3. Select the correct game from the list and copy the profile to it.
-4. Once the profile is assigned to the correct game, **profile switching should work normally again**.
-
-> 💡 Backing up and organizing your profiles before deleting `settings.db` can save you from having to redo these steps afterward.
-
-Thanks to [Tunnah](https://www.techpowerup.com/forums/members/tunnah.100852/) on TechPowerUp for the helpful feedback.
-
-[Original post](https://www.techpowerup.com/forums/threads/logitech-headsets-modded-driver-%E2%80%94-unlock-dolby-in-g-hub.352645/post-5793076)
-
----
-
----
-
-## ✅ Tested / Compatibility
-
-| Category | Details | 
+| Category | Supported devices or versions |
 |---|---|
-| **Headsets** | Logitech G430, G431, G432, G433, G533, G633, G635, G733, G933, G935, PRO X, PRO X WIRELESS |
-| **OS** | Windows 10 / Windows 11 |
-| **G HUB** | 2026.6.967771 / 2026.5.939708 / 2026.4.919028 |
+| **Headsets** | Logitech G430, G431, G432, G433, G533, G633, G635, G733, G933, G935, PRO X, PRO X Wireless |
+| **Windows** | Windows 10 / Windows 11 |
+| **G HUB** | The setup detects the installed depot. Compatibility may vary by G HUB version and headset model. |
 
-<br>
+---
 
-<div align="center">
-<sub>Community driver modification — not affiliated with or endorsed by Logitech.</sub>
-</div>
-
-
-                                                                                       
+<sub>Community driver modification. Not affiliated with or endorsed by Logitech.</sub>
