@@ -1,116 +1,133 @@
-<h1 align="center">🎧 Logitech G HUB Dolby Unlock</h1>
-
-<p align="center"><strong>Community modification for supported Logitech headsets</strong></p>
-
 <p align="center">
-  <a href="https://www.techpowerup.com/forums/threads/logitech-headsets-modded-driver-%E2%80%94-unlock-dolby-in-g-hub.352645/">Original TechPowerUp thread</a>
-  · Previous guide preserved in <a href="README-OLD.md">README-OLD.md</a>
+  <h1 align="center">🎧 Logitech Headsets Modded Driver — Unlock Dolby in G HUB</h1>
 </p>
 
-> **Current instructions:** This README describes the updated setup workflow. The previous manual guide is kept in [`README-OLD.md`](README-OLD.md) for reference; its cache-renaming step is obsolete. Do not follow that step.
+<p align="center">
+This modification is designed to unlock Dolby functionality in G HUB for supported Logitech headsets
+</p>
 
-## Contents
+<p align="center">
+The driver itself is based on the original Logitech driver, with the necessary modifications applied to enable the Dolby functionality
+</p>
 
-- [What this project does](#what-this-project-does)
-- [Setup package](#setup-package)
-- [Setup options](#setup-options)
-- [What the cache patch changes](#what-the-cache-patch-changes)
-- [Backups and settings](#backups-and-settings)
-- [Before you start](#before-you-start)
-- [Compatibility](#compatibility)
+💬 [Original TechPowerUp Thread](https://www.techpowerup.com/forums/threads/logitech-headsets-modded-driver-%E2%80%94-unlock-dolby-in-g-hub.352645/)
+---
 
-## What this project does
+## ✨ Features
 
-This community modification enables Dolby device definitions in Logitech G HUB for supported Logitech headsets. It uses Logitech headset audio-driver files with modifications. It is not affiliated with or endorsed by Logitech.
-
-- Adds Dolby device definitions to G HUB.
-- Includes an installer workflow for cleaning up and staging the supplied Logitech audio driver.
-- Patches the active G HUB core cache while keeping the filename G HUB expects.
-- Includes updated Blue VO!CE 2.0 Effect files for devices that support them.
+- Dolby unlocked in G HUB along with DTS
+- Based on the original Logitech headset driver
+- Updated Blue VO!CE version for devices that already support it (Logitech Blue VO!CE 2.0 Effect)
 
 <p align="center">
   <table>
     <tr>
       <td align="center" width="400">
-        <img src="img/DOLBY.png" alt="Dolby in G HUB" width="380"><br>
-        <sub>Dolby in G HUB</sub>
+        <img src="img/DOLBY.png" alt="Dolby unlocked in G HUB" width="380"><br>
+        <sub>🔊 Dolby</sub>
       </td>
       <td align="center" width="400">
-        <img src="img/Blue%20VO!CE%202.0%20Effect.png" alt="Blue VO!CE 2.0 Effect" width="380"><br>
-        <sub>Blue VO!CE 2.0 Effect</sub>
+        <img src="img/Blue%20VO!CE%202.0%20Effect.png" alt="Logitech Blue VO!CE 2.0 Effect" width="380"><br>
+        <sub>🎙️ Blue VO!CE 2.0 Effect</sub>
       </td>
     </tr>
   </table>
 </p>
 
-## Setup package
+---
 
-The setup package (`SETUP.bat` and its complete `Payload` folder) is distributed separately from this source repository. Keep `SETUP.bat` beside `Payload` after extracting the package, then run `SETUP.bat` as administrator.
+## 🛠️ installation
 
-## Setup options
+**1. 📜 Install the certificate.**
 
-### 1. Full setup
+**2. 💿 Install the modified driver through Device Manager.**
 
-The full setup runs these stages in order:
+**3. 📁 Place the Dolby Unlock files in the following directory:**
+```
+C:\ProgramData\LGHUB\depots\824196\core\data\devices
+```
+> Note: The `824196` folder number may be different depending on your installed G HUB version. Use the corresponding folder for your current G HUB version.
 
-1. **Prepare Windows Audio and G HUB** — stops the relevant audio and G HUB processes/services.
-2. **Clean up Logitech audio devices** — removes the selected old Logitech audio-driver packages and ghost devices.
-3. **Stage and apply the supplied driver** — stages the package and uses DevCon to apply it to supported connected hardware.
-4. **Apply Dolby files** — backs up and updates the device-definition files in the installed G HUB depot, then patches the active core cache.
-5. **Reset G HUB settings** — backs up `%LocalAppData%\LGHUB\settings.db`, then removes it so G HUB can rebuild its settings.
-6. **Restore services and launch G HUB** — starts Windows Audio and G HUB again.
-
-### 2. Dolby unlock only
-
-This option stops G HUB, backs up and reapplies the Dolby depot files, patches the active core cache, then starts G HUB. It does not reinstall the audio driver or reset `settings.db`.
-
-## What the cache patch changes
-
-`Patch-GHubCache.ps1` reads `%ProgramData%\LGHUB\current.json` to find the active core-cache package. It checks that the package is the largest hash-named cache file, backs up the original, and updates only these entries inside it:
-
-- `data/devices/devices_0001.json`
-- `data/devices/devices_0002.json`
-
-The patch verifies the updated entries and preserves the cache filename G HUB expects. **Do not rename the cache file manually.** If the Dolby definitions are already present, the patcher reports that and leaves the cache unchanged.
-
-## Backups and settings
-
-Setup creates timestamped runtime backups under:
-
-```text
-%ProgramData%\Logitech-Dolby-Unlock\Backups\<timestamp>
+**4. 🔄 Rename the largest cache file by size to any name of your choice:**
+```
+C:\ProgramData\LGHUB\cache\cf28f08062c13c131b272626d16a34e0557cf9669a95cbe40d1a5da5238d5b4b
+```
+Example:
+```
+cf28f08062c13c131b272626d16a34e0557cf9669a95cbe40d1a5da5238d5b4b-999
 ```
 
-Depending on the option and changes made, backups can include the original depot JSON files, the original cache package, and `settings.db`. The setup package may also include static backup-device files under `Payload\DOLBY UNLOCKED FILES\BACKUP DEVICES`; those are package files, separate from the runtime backups captured from your PC.
+**5. ⚙️ Stop all G HUB services through Task Manager, then delete the following file:**
+```
+%localappdata%\LGHUB\settings.db
+```
+---
 
-Resetting `settings.db` can reset local G HUB settings and profile assignments. Back up profiles first:
+## ⚠️ Important  
 
-1. In G HUB, open **Manage Profiles**.
-2. Select a profile and open its three-dot menu.
-3. Choose **Share** to save it to your Logitech account, or **Backup** to save it locally.
+##  Disable G HUB Automatic Updatess
 
-After the reset, you may need to scan for your games again. If a restored profile appears under **Desktop**, use its three-dot menu to copy it to the correct game.
+To prevent G HUB from automatically updating and potentially breaking the modification, **disable Automatic Updates after completing the installation.**
+**G HUB updates can refresh its cache and replace the Dolby Unlock files.**
 
-## Before you start
 
-- The full setup adds the third-party `Restless14` certificate to the Windows **Root** and **TrustedPublisher** certificate stores.
-- Back up your G HUB profiles before choosing Full setup.
-- Disable G HUB automatic updates while using the modification. An update may replace modified depot or cache content. In G HUB, open **Settings → Updates** and turn off **Enable Automatic Updates**.
+Go to:
+
+**G HUB → Settings ⚙️ → Updates → Disable "Enable Automatic Updates"**
+
+> ⚠️ **Keep Automatic Updates disabled while using this modification.**
 
 <p align="center">
-  <img src="img/disable-automatic-updates.png" alt="Disable G HUB automatic updates" width="800">
+  <img src="img/disable-automatic-updates.png" alt="Disable G HUB Automatic Updates" width="800">
 </p>
 
-## Compatibility
+## 💾 Back Up G HUB Profiles
 
-| Category | Details |
-|---|---|
-| Headsets | Logitech G430, G431, G432, G433, G533, G633, G635, G733, G933, G935, PRO X, PRO X Wireless |
-| Windows | Windows 10 / Windows 11 |
-| G HUB | The setup detects the installed depot; compatibility may vary by G HUB version and headset model. |
+> **Back up your G HUB profiles before making any changes.**
 
-Thanks to [Tunnah](https://www.techpowerup.com/forums/members/tunnah.100852/) for feedback on the original TechPowerUp thread.
+Go to **G HUB → Manage Profiles**, select the profile you want to back up, click the **three dots**, then choose:
+
+- **Share** — saves the profile to your Logitech account.
+- **Backup** — saves the profile locally.
+
+> ⚠️ **Do this before deleting `settings.db`**, as your saved G HUB settings and profiles may be removed.
+
+### 🔄 Restoring Profiles
+
+After resetting G HUB, you may need to **add or scan for your games again**.
+
+In some cases, restored profiles may appear under **Desktop** instead of being assigned to their original games.
+
+To fix this:
+
+1. Add or scan for your games again in G HUB.
+2. Click the **three dots** on the profile and select **Copy**.
+3. Select the correct game from the list and copy the profile to it.
+4. Once the profile is assigned to the correct game, **profile switching should work normally again**.
+
+> 💡 Backing up and organizing your profiles before deleting `settings.db` can save you from having to redo these steps afterward.
+
+Thanks to [Tunnah](https://www.techpowerup.com/forums/members/tunnah.100852/) on TechPowerUp for the helpful feedback.
+
+[Original post](https://www.techpowerup.com/forums/threads/logitech-headsets-modded-driver-%E2%80%94-unlock-dolby-in-g-hub.352645/post-5793076)
 
 ---
 
-<p align="center"><sub>Community driver modification. Not affiliated with or endorsed by Logitech.</sub></p>
+---
+
+## ✅ Tested / Compatibility
+
+| Category | Details | 
+|---|---|
+| **Headsets** | Logitech G430, G431, G432, G433, G533, G633, G635, G733, G933, G935, PRO X, PRO X WIRELESS |
+| **OS** | Windows 10 / Windows 11 |
+| **G HUB** | 2026.6.967771 / 2026.5.939708 / 2026.4.919028 |
+
+<br>
+
+<div align="center">
+<sub>Community driver modification — not affiliated with or endorsed by Logitech.</sub>
+</div>
+
+
+                                                                                       
